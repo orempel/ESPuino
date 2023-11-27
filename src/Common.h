@@ -53,49 +53,6 @@ inline void convertFilenameToAscii(String utf8String, char *asciiString) {
 	asciiString[utf8String.length()] = 0;
 }
 
-inline void convertAsciiToUtf8(String asciiString, char *utf8String) {
-
-	int k = 0;
-
-	for (int i = 0; i < asciiString.length() && k < MAX_FILEPATH_LENTGH - 2; i++) {
-
-		switch (asciiString[i]) {
-			case 0x8e:
-				utf8String[k++] = 0xc3;
-				utf8String[k++] = 0x84;
-				break; // Ä
-			case 0x84:
-				utf8String[k++] = 0xc3;
-				utf8String[k++] = 0xa4;
-				break; // ä
-			case 0x9a:
-				utf8String[k++] = 0xc3;
-				utf8String[k++] = 0x9c;
-				break; // Ü
-			case 0x81:
-				utf8String[k++] = 0xc3;
-				utf8String[k++] = 0xbc;
-				break; // ü
-			case 0x99:
-				utf8String[k++] = 0xc3;
-				utf8String[k++] = 0x96;
-				break; // Ö
-			case 0x94:
-				utf8String[k++] = 0xc3;
-				utf8String[k++] = 0xb6;
-				break; // ö
-			case 0xe1:
-				utf8String[k++] = 0xc3;
-				utf8String[k++] = 0x9f;
-				break; // ß
-			default:
-				utf8String[k++] = asciiString[i];
-		}
-	}
-
-	utf8String[k] = 0;
-}
-
 // Release previously allocated memory
 inline void freeMultiCharArray(char **arr, const uint32_t cnt) {
 	for (uint32_t i = 0; i < cnt; i++) {
