@@ -47,12 +47,6 @@ inline bool endsWith(const char *str, const char *suf) {
 	return b == suf && *a == *b;
 }
 
-inline void convertFilenameToAscii(String utf8String, char *asciiString) {
-	// Arduino >= 2.0.5 filenames are already unicode, copy to result here without UTF-8 decoding
-	strncpy(asciiString, (char *) utf8String.c_str(), utf8String.length() / sizeof(asciiString[0]));
-	asciiString[utf8String.length()] = 0;
-}
-
 // Release previously allocated memory
 inline void freeMultiCharArray(char **arr, const uint32_t cnt) {
 	for (uint32_t i = 0; i < cnt; i++) {
