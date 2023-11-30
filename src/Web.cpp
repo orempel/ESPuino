@@ -1304,12 +1304,9 @@ void explorerHandleListRequest(AsyncWebServerRequest *request) {
 	String MyfileName = root.getNextFileName(&isDir);
 	while (MyfileName != "") {
 		// ignore hidden folders, e.g. MacOS spotlight files
-		if (!startsWith(MyfileName.c_str(), (char *) "/.")) {
+		if (!MyfileName.startsWith("/.")) {
 			JsonObject entry = obj.createNestedObject();
-			convertAsciiToUtf8(MyfileName.c_str(), filePath);
-			std::string path = filePath;
-			std::string fileName = path.substr(path.find_last_of("/") + 1);
-			entry["name"] = fileName;
+			entry["name"] = MyfileName.substring(MyfileName.lastIndexOf('/') + 1);
 			if (isDir) {
 				entry["dir"].set(true);
 			}
@@ -1836,12 +1833,8 @@ void Web_DumpSdToNvs(const char *_filename) {
 					nvsEntry[0].nvsKey[strlen(token)] = '\0';
 				} else {
 					count = false;
-					if (isUtf8) {
-						memcpy(nvsEntry[0].nvsEntry, token, strlen(token));
-						nvsEntry[0].nvsEntry[strlen(token)] = '\0';
-					} else {
-						convertAsciiToUtf8(String(token), nvsEntry[0].nvsEntry);
-					}
+					memcpy(nvsEntry[0].nvsEntry, token, strlen(token));
+					nvsEntry[0].nvsEntry[strlen(token)] = '\0';
 				}
 				token = strtok(NULL, stringOuterDelimiter);
 			}
